@@ -8,7 +8,7 @@ from torch.utils.data import DataLoader
 from generator import CustomDataGenerator
 from models import trans_unet, swin_unet, unet
 
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 IMG_SIZE = 224                                                                  # lower image size for random crops (data augmentation)
 CHANNELS = 3
 
@@ -52,7 +52,7 @@ def show_stats(y_pred, y_true, accuracy):
 def evaluate(model, criterion):
     testDataset = CustomDataGenerator(image_file='images_test',
                                         mask_file='masks_test', 
-                                        root_dir='dataset',
+                                        root_dir='../dataset',
                                         transform=transforms.Compose([
                                             Rescale(256),
                                             CenterCrop(IMG_SIZE),

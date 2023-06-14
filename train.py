@@ -10,7 +10,7 @@ from models import trans_unet, swin_unet, unet
 
 INIT_EPOCH = 0
 EPOCHS = 100
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 IMG_SIZE = 224                                                                  
 CHANNELS = 3
 LEARNING_RATE = 0.001
@@ -36,7 +36,7 @@ class dice_loss(torch.nn.Module):
 def get_dataloader():
     trainDataset = CustomDataGenerator(image_file='images_train',
                                     mask_file='masks_train', 
-                                    root_dir='dataset',
+                                    root_dir='../dataset',
                                     transform=transforms.Compose([
                                         Rescale(256),
                                         RandomFlip(0.5),
@@ -51,7 +51,7 @@ def get_dataloader():
     # no transforms here, just resize the image
     valDataset = CustomDataGenerator(image_file='images_val',
                                     mask_file='masks_val', 
-                                    root_dir='dataset',
+                                    root_dir='../dataset',
                                     transform=transforms.Compose([
                                         Rescale(256),
                                         CenterCrop(IMG_SIZE),
@@ -106,7 +106,7 @@ def train(model, criterion, opt, scheduler):
             print('Epoch: {}/{} - accuracy: {:.4f}'.format(epoch+1, EPOCHS, np.mean(accuracy)))
 
         # save model checkpoint
-        if (epoch + 1) % 5 == 0:
+        if (epoch + 1) % 2 == 0:
             torch.save({'epoch': epoch + 1,
                         'model_state_dict': model.state_dict(),
                         'optimizer_state_dict': opt.state_dict(),

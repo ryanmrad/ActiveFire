@@ -35,7 +35,7 @@ def predict(model):
 
     testDataset = CustomDataGenerator(image_file='images_test',
                                     mask_file='masks_test', 
-                                    root_dir='dataset',
+                                    root_dir='../dataset',
                                     transform=transforms.Compose([
                                         Rescale(256),
                                         CenterCrop(IMG_SIZE),

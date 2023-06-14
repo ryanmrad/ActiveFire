@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import rasterio
 
-BASE_PATH = '<your-base-path>'
+BASE_PATH = '/home/r_rad/'
 IMAGES_PATH = BASE_PATH + 'dataset/images/patches/'
 MASKS_PATH = BASE_PATH + 'dataset/masks/voting/'
 
@@ -30,8 +30,8 @@ class CustomDataGenerator(torch.utils.data.Dataset):
         
         mask_path = self.masks['masks'].iloc[idx]
         # correct file names - add '_voting_'
-        mask_path = mask_path.split('_')
-        mask_path = '_'.join(mask_path[:-1]) + '_voting_' + mask_path[-1]
+        #mask_path = mask_path.split('_')
+        #mask_path = '_'.join(mask_path[:-1]) + '_voting_' + mask_path[-1]
         mask = rasterio.open(MASKS_PATH + mask_path).read().transpose((1, 2, 0))
         mask = np.float32(mask > 0.5)                                           # apparently they are not thresholded
         
